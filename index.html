@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dicky Adi Nugroho Mahasiswa Fakultas Vokasi Universitas Brawijaya</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy:     #0A0F1E;
+    --slate:    #1A2744;
+    --cyan:     #00D4FF;
+    --cyan-dim: #007FA6;
+    --white:    #F0F4FF;
+    --muted:    #6B7A99;
+    --card-bg:  #121929;
+    --border:   rgba(0, 212, 255, 0.12);
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.4rem;
+    white-space: nowrap;
+  }
+  h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 1.2rem 6vw;
+    background: rgba(10, 15, 30, 0.85);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.3s;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: -3px;
+    width: 0; height: 1px;
+    background: var(--cyan);
+    transition: width 0.25s ease;
+  }
+  .nav-links a:hover { color: var(--cyan); }
+  .nav-links a:hover::after { width: 100%; }
+  #scroll-progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    width: 0%;
+    background: linear-gradient(90deg, var(--cyan), #a78bfa);
+    z-index: 200;
+    transition: width 0.1s linear;
+  }
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 0 6vw;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 70% at 60% 50%, black 30%, transparent 80%);
+  }
+  .hero-glow {
+    position: absolute;
+    top: 20%; right: 10%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(0, 212, 255, 0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: 0;
+    animation: pulse-glow 4s ease-in-out infinite;
+  }
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50%       { opacity: 1;   transform: scale(1.08); }
+  }
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: center;
+    gap: 4rem;
+  }
+  .hero-content { max-width: 600px; }
+  .hero-content h1       { animation: fadeUp 0.7s ease both; animation-delay: 0.1s; }
+  .hero-content .hero-sub{ animation: fadeUp 0.7s ease both; animation-delay: 0.25s; }
+  .hero-content .hero-badges { animation: fadeUp 0.7s ease both; animation-delay: 0.4s; }
+  .hero-content .hero-cta    { animation: fadeUp 0.7s ease both; animation-delay: 0.55s; }
+  .hero-photo-wrap           { animation: fadeIn 1s ease both;   animation-delay: 0.3s; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  .hero-photo-wrap {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .hero-photo-wrap::before,
+  .hero-photo-wrap::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    background: transparent;
+    pointer-events: none;
+  }
+  .hero-photo-wrap::before {
+    width: 390px; height: 390px;
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    animation: pulse-ring 2.8s ease-out infinite;
+  }
+  .hero-photo-wrap::after {
+    width: 430px; height: 430px;
+    border: 1px solid rgba(0, 212, 255, 0.08);
+    animation: pulse-ring 2.8s ease-out infinite;
+    animation-delay: 0.7s;
+  }
+  @keyframes pulse-ring {
+    0%   { transform: scale(0.94); opacity: 0.8; }
+    100% { transform: scale(1.12); opacity: 0; }
+  }
+  .hero-photo-ring {
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+    padding: 4px;
+    background: conic-gradient(
+      from 0deg,
+      var(--cyan) 0deg,
+      transparent 120deg,
+      transparent 180deg,
+      var(--cyan) 240deg,
+      transparent 300deg,
+      transparent 360deg
+    );
+    animation: spin-ring 6s linear infinite;
+    flex-shrink: 0;
+  }
+  @keyframes spin-ring { to { transform: rotate(360deg); } }
+  .hero-photo-frame {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--slate);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: counter-spin-ring 6s linear infinite;
+  }
+  @keyframes counter-spin-ring { to { transform: rotate(-360deg); } }
+  .hero-photo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    border-radius: 50%;
+  }
+  .hero-photo-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: var(--muted);
+    opacity: 0.5;
+  }
+  .hero-dot {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--cyan);
+    animation: float-dot 3s ease-in-out infinite;
+  }
+  .hero-dot-1 { width: 12px; height: 12px; top: 10%;    right: 8%;  animation-delay: 0s;   opacity: 0.6; }
+  .hero-dot-2 { width:  8px; height:  8px; bottom: 15%; left: 5%;   animation-delay: 1s;   opacity: 0.4; }
+  .hero-dot-3 { width: 16px; height: 16px; top: 55%;    right: 2%;  animation-delay: 2s;   opacity: 0.25; }
+  @keyframes float-dot {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-10px); }
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 1.5rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 2rem; height: 1px;
+    background: var(--cyan);
+  }
+ 
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 520px;
+    margin: 1.2rem 0 2.4rem;
+    line-height: 1.7;
+  }
+  .hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 2.8rem;
+  }
+  .badge {
+    padding: 0.3rem 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    font-size: 0.78rem;
+    color: var(--muted);
+    background: rgba(255, 255, 255, 0.03);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .badge.active {
+    border-color: rgba(0, 212, 255, 0.4);
+    color: var(--cyan);
+    background: rgba(0, 212, 255, 0.06);
+  }
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn {
+    padding: 0.75rem 1.8rem;
+    border-radius: 6px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: inline-block;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-primary {
+    background: var(--cyan);
+    color: var(--navy);
+    border: none;
+  }
+  .btn-primary:hover {
+    background: #33ddff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 212, 255, 0.3);
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--white);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover {
+    border-color: var(--cyan);
+    color: var(--cyan);
+    box-shadow: 0 0 16px rgba(0, 212, 255, 0.1);
+  }
+  section { padding: 6rem 6vw; }
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 0.8rem;
+  }
+  /* ── ABOUT LAYOUT ── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 1.4rem;
+    align-items: start;
+    margin-top: 3rem;
+  }
+  .about-left  { display: flex; flex-direction: column; gap: 1.4rem; }
+  .about-right { display: flex; flex-direction: column; gap: 1.4rem; }
+
+  /* Terminal */
+  .terminal {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .terminal-bar {
+    background: var(--slate);
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .t-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .t-dot-r { background: #ff5f57; }
+  .t-dot-y { background: #ffbd2e; }
+  .t-dot-g { background: #28ca41; }
+  .t-filename {
+    margin-left: 8px;
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-family: 'Courier New', monospace;
+  }
+  .terminal-body {
+    padding: 1.3rem 1.5rem;
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    line-height: 1.9;
+  }
+  .ln { display: flex; gap: 1rem; }
+  .ln-num { color: rgba(107,122,153,0.35); min-width: 18px; text-align: right; user-select: none; }
+  .kw  { color: #a78bfa; }
+  .str { color: #4ade80; }
+  .key { color: var(--cyan); }
+  .val { color: var(--white); }
+  .cm  { color: var(--muted); font-style: italic; }
+  .pun { color: var(--muted); }
+
+  /* Stat row — di bawah terminal */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8rem;
+  }
+  .stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 0.8rem;
+    text-align: center;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .stat-card:hover {
+    border-color: rgba(0, 212, 255, 0.35);
+    transform: translateY(-3px);
+  }
+  .stat-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.55rem;
+    font-weight: 700;
+    color: var(--cyan);
+    display: block;
+  }
+  .stat-lbl { font-size: 0.7rem; color: var(--muted); margin-top: 2px; }
+
+  /* Profile Photo Card */
+  .photo-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.8rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+  }
+  .photo-ring-wrap {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .photo-ring-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    animation: about-spin 5s linear infinite;
+  }
+  @keyframes about-spin { to { transform: rotate(360deg); } }
+  .photo-ring-inner {
+    position: relative;
+    z-index: 1;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--slate);
+    border: 2px solid rgba(0,212,255,0.2);
+  }
+  .photo-ring-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+  .photo-initials {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--cyan);
+  }
+  .photo-card-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--white);
+    margin: 0;
+  }
+  .photo-card-sub {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin: 0;
+  }
+  .id-badges { display: flex; gap: 0.4rem; flex-wrap: wrap; justify-content: center; margin-top: 0.2rem; }
+  .id-badge {
+    font-size: 0.68rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 99px;
+    border: 1px solid rgba(0, 212, 255, 0.25);
+    color: var(--cyan);
+    background: rgba(0, 212, 255, 0.06);
+  }
+
+  /* Focus area card */
+  .focus-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.2rem 1.4rem;
+    flex: 1;
+  }
+  .focus-header {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.9rem;
+  }
+  .focus-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .focus-tag {
+    padding: 0.4rem 0.9rem;
+    border-radius: 8px;
+    font-size: 0.76rem;
+    font-weight: 500;
+  }
+  .ft-frontend { background: rgba(0,212,255,0.1);    color: var(--cyan);  border: 1px solid rgba(0,212,255,0.2); }
+  .ft-backend  { background: rgba(167,139,250,0.1);  color: #a78bfa;      border: 1px solid rgba(167,139,250,0.2); }
+  .ft-iot      { background: rgba(74,222,128,0.1);   color: #4ade80;      border: 1px solid rgba(74,222,128,0.2); }
+  .ft-uiux     { background: rgba(251,146,60,0.1);   color: #fb923c;      border: 1px solid rgba(251,146,60,0.2); }
+
+  /* ── SKILLS — CIRCULAR DESIGN ── */
+  .skills-section { background: var(--card-bg); }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.5rem 1.5rem;
+    margin-top: 3.5rem;
+    justify-items: center;
+  }
+
+  .skill-orb {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .skill-orb.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* stagger */
+  .skill-orb:nth-child(1) { transition-delay: 0.05s; }
+  .skill-orb:nth-child(2) { transition-delay: 0.12s; }
+  .skill-orb:nth-child(3) { transition-delay: 0.19s; }
+  .skill-orb:nth-child(4) { transition-delay: 0.26s; }
+  .skill-orb:nth-child(5) { transition-delay: 0.33s; }
+  .skill-orb:nth-child(6) { transition-delay: 0.40s; }
+  .skill-orb:nth-child(7) { transition-delay: 0.47s; }
+  .skill-orb:nth-child(8) { transition-delay: 0.54s; }
+
+  .orb-ring-wrap {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* SVG spinning ring */
+  .orb-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    animation: spin-orb 4s linear infinite;
+  }
+
+  .skill-orb:nth-child(even) .orb-svg {
+    animation-direction: reverse;
+    animation-duration: 5s;
+  }
+
+  @keyframes spin-orb { to { transform: rotate(360deg); } }
+
+  /* pause on hover */
+  .skill-orb:hover .orb-svg { animation-play-state: paused; }
+
+  .orb-inner {
+    position: relative;
+    z-index: 1;
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    background: var(--slate);
+    border: 1px solid rgba(0, 212, 255, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .skill-orb:hover .orb-inner {
+    border-color: rgba(0, 212, 255, 0.5);
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+  }
+
+  .orb-percent {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cyan);
+    line-height: 1;
+  }
+
+  .orb-label {
+    text-align: center;
+  }
+
+  .orb-label h4 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 0.2rem;
+  }
+
+  .orb-label p {
+    font-size: 0.72rem;
+    color: var(--muted);
+    max-width: 110px;
+    line-height: 1.4;
+  }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1.8rem;
+  }
+  .project-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.25s, box-shadow 0.25s;
+    cursor: default;
+  }
+  .project-card:hover {
+    border-color: rgba(0, 212, 255, 0.35);
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  }
+  .proj-img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .proj-img::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(105deg, transparent 40%, rgba(0, 212, 255, 0.08) 50%, transparent 60%);
+    transform: translateX(-100%);
+  }
+  .project-card:hover .proj-img::after { animation: shimmer 0.6s ease forwards; }
+  @keyframes shimmer { to { transform: translateX(100%); } }
+  .proj-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .proj-screenshot { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+  .proj-img-1 { background: linear-gradient(135deg, #0f2744 0%, #0a4a6b 100%); }
+  .proj-img-2 { background: linear-gradient(135deg, #1a0f44 0%, #3a1d6b 100%); }
+  .proj-img-3 { background: linear-gradient(135deg, #0f3320 0%, #1a6b3a 100%); }
+  .proj-img-4 { background: linear-gradient(135deg, #44200f 0%, #6b3a1d 100%); }
+  .proj-img-5 { background: linear-gradient(135deg, #2a0f44 0%, #4b2a6b 100%); }
+  .proj-img-6 { background: linear-gradient(135deg, #0f3344 0%, #1a5a6b 100%); }
+  .proj-screen {
+    width: 80%; height: 80%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .proj-screen-bar {
+    height: 22px;
+    background: rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 0 8px;
+  }
+  .dot { width: 7px; height: 7px; border-radius: 50%; }
+  .d1 { background: #ff5f57; } .d2 { background: #ffbd2e; } .d3 { background: #28ca41; }
+  .proj-screen-body { flex: 1; padding: 8px; display: flex; flex-direction: column; gap: 5px; }
+  .line { height: 6px; background: rgba(255,255,255,0.12); border-radius: 3px; }
+  .line.short { width: 50%; } .line.med { width: 75%; }
+  .proj-body { padding: 1.4rem; }
+  .proj-meta { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.7rem; }
+  .proj-tag {
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 0.2rem 0.6rem; border-radius: 4px;
+  }
+  .tag-web    { background: rgba(0,212,255,0.1);   color: var(--cyan); }
+  .tag-ml     { background: rgba(120,80,255,0.1);  color: #a78bfa; }
+  .tag-db     { background: rgba(34,197,94,0.1);   color: #4ade80; }
+  .tag-mobile { background: rgba(251,146,60,0.1);  color: #fb923c; }
+  .tag-iot    { background: rgba(236,72,153,0.1);  color: #f472b6; }
+  .proj-semester { font-size: 0.72rem; color: var(--muted); margin-left: auto; }
+  .proj-body h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; line-height: 1.3;
+  }
+  .proj-body p { font-size: 0.875rem; color: var(--muted); line-height: 1.6; }
+  .proj-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
+  .stack-pill {
+    font-size: 0.72rem; padding: 0.2rem 0.55rem;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 4px; color: var(--muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .project-card:hover .stack-pill { border-color: rgba(0,212,255,0.15); }
+  .contact-section { background: var(--card-bg); border-top: 1px solid var(--border); }
+  .contact-inner { max-width: 600px; margin: 0 auto; text-align: center; }
+  .contact-inner h2 { margin-bottom: 1rem; }
+  .contact-inner p { color: var(--muted); margin-bottom: 2.4rem; }
+  .contact-links { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+  .contact-link {
+    display: flex; align-items: center; gap: 0.5rem;
+    padding: 0.7rem 1.4rem;
+    background: var(--slate); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--white);
+    text-decoration: none; font-size: 0.875rem; font-weight: 500;
+    transition: all 0.2s ease, box-shadow 0.2s ease;
+  }
+  .contact-link:hover {
+    border-color: var(--cyan); color: var(--cyan);
+    box-shadow: 0 0 16px rgba(0,212,255,0.2);
+    transform: translateY(-2px);
+  }
+  .contact-link svg { width: 16px; height: 16px; }
+footer {
+  padding: 2rem 6vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-top: 1px solid var(--border);
+}
+
+footer p {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+  footer a { color: var(--cyan); text-decoration: none; }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 0 6vw; }
+  .reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 1100px) {
+    .skills-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; text-align: center; gap: 3rem; }
+    .hero-content { max-width: 100%; }
+    .hero-badges { justify-content: center; }
+    .hero-cta { justify-content: center; }
+    .hero-photo-ring { width: 260px; height: 260px; }
+    .hero-photo-wrap { order: -1; }
+    .hero-photo-wrap::before { width: 290px; height: 290px; }
+    .hero-photo-wrap::after  { width: 320px; height: 320px; }
+  }
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .about-grid { grid-template-columns: 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .skills-grid { grid-template-columns: repeat(2, 1fr); }
+    h1 { white-space: normal; }
+  }
+  @media (max-width: 480px) {
+    .skills-grid { grid-template-columns: repeat(2, 1fr); }
+    .orb-ring-wrap { width: 100px; height: 100px; }
+    .orb-inner { width: 74px; height: 74px; }
+    .orb-percent { font-size: 0.95rem; }
+  }
+</style>
+</head>
+<body>
+
+<div id="scroll-progress"></div>
+
+<nav>
+  <ul class="nav-links">
+    <li><a href="#about">Tentang</a></li>
+    <li><a href="#skills">Keahlian</a></li>
+    <li><a href="#projects">Proyek</a></li>
+    <li><a href="#contact">Kontak</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <h1>Dicky Adi <span class="name-ub">Nugroho.</span></h1>
+      <p class="hero-sub">
+       Mahasiswa Fakultas Vokasi Universitas Brawijaya yang sedang mengembangkan kemampuan di bidang pengembangan web, baik pada sisi frontend maupun backend.
+      </p>
+      <div class="hero-badges">
+        <span class="badge active">Teknologi Informasi</span>
+        <span class="badge">Semester 4</span>
+        <span class="badge">Angkatan 2024</span>
+      </div>
+      <div class="hero-cta">
+  <a href="#projects" class="btn btn-primary">Lihat Proyek</a>
+
+  <a href="cv/dicky.pdf"
+     class="btn btn-ghost"
+     download>
+     Download CV
+  </a>
+
+  <a href="#contact" class="btn btn-ghost">Hubungi Saya</a>
+</div>
+    </div>
+    <div class="hero-photo-wrap">
+      <div class="hero-photo-ring">
+        <div class="hero-photo-frame">
+          <img src="foto/fotoprofil.png" alt="Foto Dicky Adi Nugroho" class="hero-photo-img"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div class="hero-photo-placeholder" style="display:none;">
+            <svg width="64" height="64" viewBox="0 0 56 56" fill="none">
+              <circle cx="28" cy="20" r="12" stroke="#6B7A99" stroke-width="2"/>
+              <path d="M6 50c0-12.15 9.85-22 22-22s22 9.85 22 22" stroke="#6B7A99" stroke-width="2"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="hero-dot hero-dot-1"></div>
+      <div class="hero-dot hero-dot-2"></div>
+      <div class="hero-dot hero-dot-3"></div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="section-label">Profil</div>
+  <h2>Tentang Saya</h2>
+  <div class="about-grid">
+
+    <!-- KIRI: Terminal -->
+    <div class="about-left reveal">
+      <div class="terminal">
+        <div class="terminal-bar">
+          <div class="t-dot t-dot-r"></div>
+          <div class="t-dot t-dot-y"></div>
+          <div class="t-dot t-dot-g"></div>
+          <span class="t-filename">profile.php</span>
+        </div>
+        <div class="terminal-body">
+          <div class="ln"><span class="ln-num">1</span><span><span class="kw">const</span> <span class="val">profile</span> <span class="pun">= {</span></span></div>
+          <div class="ln"><span class="ln-num">2</span><span>&nbsp;&nbsp;<span class="key">name</span><span class="pun">:</span> <span class="str">"Dicky Adi Nugroho"</span><span class="pun">,</span></span></div>
+          <div class="ln"><span class="ln-num">3</span><span>&nbsp;&nbsp;<span class="key">role</span><span class="pun">:</span> <span class="str">"Web Developer"</span><span class="pun">,</span></span></div>
+          <div class="ln"><span class="ln-num">4</span><span>&nbsp;&nbsp;<span class="key">university</span><span class="pun">:</span> <span class="str">"Universitas Brawijaya"</span><span class="pun">,</span></span></div>
+          <div class="ln"><span class="ln-num">5</span><span>&nbsp;&nbsp;<span class="key">major</span><span class="pun">:</span> <span class="str">"Teknologi Informasi"</span><span class="pun">,</span></span></div>
+          <div class="ln"><span class="ln-num">6</span><span>&nbsp;&nbsp;<span class="key">batch</span><span class="pun">:</span> <span class="val">2024</span><span class="pun">,</span></span></div>
+          <div class="ln"><span class="ln-num">7</span><span>&nbsp;&nbsp;<span class="key">semester</span><span class="pun">:</span> <span class="val">4</span><span class="pun">,</span></span></div>
+          <div class="ln"><span class="ln-num">8</span><span>&nbsp;&nbsp;<span class="key">location</span><span class="pun">:</span> <span class="str">"Malang, Jawa Timur"</span><span class="pun">,</span></span></div>
+          <div class="ln"><span class="ln-num">9</span><span>&nbsp;&nbsp;<span class="key">focus</span><span class="pun">: [</span><span class="str">"Frontend"</span><span class="pun">,</span> <span class="str">"Backend"</span><span class="pun">],</span></span></div>
+          <div class="ln"><span class="ln-num">10</span><span>&nbsp;&nbsp;<span class="key">status</span><span class="pun">:</span> <span class="str">"open to collaborate"</span></span></div>
+          <div class="ln"><span class="ln-num">11</span><span><span class="pun">};</span></span></div>
+          <div class="ln"><span class="ln-num">12</span><span></span></div>
+          <div class="ln"><span class="ln-num">13</span><span><span class="cm">// Membangun proyek nyata adalah</span></span></div>
+          <div class="ln"><span class="ln-num">14</span><span><span class="cm">// cara terbaik untuk berkembang.</span></span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KANAN: Photo card + stat row + focus -->
+    <div class="about-right reveal">
+
+      <!-- Foto profil dengan cincin + nama -->
+      <div class="photo-card">
+        <div class="photo-ring-wrap">
+          <svg class="photo-ring-svg" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="60" cy="60" r="56" stroke="rgba(0,212,255,0.07)" stroke-width="2.5"/>
+            <circle cx="60" cy="60" r="56" stroke="url(#pg1)" stroke-width="2.5"
+              stroke-linecap="round" stroke-dasharray="170 182" stroke-dashoffset="0"/>
+            <defs>
+              <linearGradient id="pg1" x1="0" y1="0" x2="120" y2="120" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#00D4FF"/>
+                <stop offset="100%" stop-color="#a78bfa"/>
+              </linearGradient>
+            </defs>
+            <circle cx="60" cy="4" r="4" fill="#00D4FF" opacity="0.9"/>
+            <circle cx="116" cy="60" r="3" fill="#a78bfa" opacity="0.6"/>
+          </svg>
+          <div class="photo-ring-inner">
+            <img
+              src="foto/dicky.png"
+              alt="Foto Dicky Adi Nugroho"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+            />
+            <div class="photo-initials" style="display:none;">DA</div>
+          </div>
+        </div>
+        <p class="photo-card-name">Dicky Adi Nugroho</p>
+        <p class="photo-card-sub">Mahasiswa Vokasi Universitas Brawijaya</p>
+        <div class="id-badges">
+          <span class="id-badge">Frontend</span>
+          <span class="id-badge">Backend</span>
+        </div>
+      </div>
+
+      <!-- Stat cards -->
+      <div class="stat-row">
+        <div class="stat-card">
+          <span class="stat-num">6+</span>
+          <span class="stat-lbl">Proyek Selesai</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">4</span>
+          <span class="stat-lbl">Semester Aktif</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">8</span>
+          <span class="stat-lbl">Teknologi</span>
+        </div>
+      </div>
+
+
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SKILLS — CIRCULAR -->
+<section id="skills" class="skills-section">
+  <div class="section-label">Keahlian</div>
+  <h2>Teknologi yang Saya Kuasai</h2>
+
+  <div class="skills-grid">
+
+    <!-- HTML & CSS -->
+    <div class="skill-orb">
+      <div class="orb-ring-wrap">
+        <svg class="orb-svg" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="60" cy="60" r="54" stroke="rgba(0,212,255,0.08)" stroke-width="3"/>
+          <circle cx="60" cy="60" r="54" stroke="url(#g1)" stroke-width="3"
+            stroke-linecap="round" stroke-dasharray="180 160" stroke-dashoffset="0"/>
+          <defs>
+            <linearGradient id="g1" x1="0" y1="0" x2="120" y2="120" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#00D4FF"/>
+              <stop offset="100%" stop-color="#a78bfa"/>
+            </linearGradient>
+          </defs>
+          <circle cx="60" cy="6" r="4" fill="#00D4FF" opacity="0.9"/>
+          <circle cx="114" cy="60" r="3" fill="#a78bfa" opacity="0.6"/>
+        </svg>
+        <div class="orb-inner">
+          <span class="orb-percent">90%</span>
+        </div>
+      </div>
+      <div class="orb-label">
+       <h4>HTML &amp; CSS</h4>
+<p>HTML5, CSS3, dan responsive web design.</p>
+      </div>
+    </div>
+
+    <!-- JavaScript -->
+    <div class="skill-orb">
+      <div class="orb-ring-wrap">
+        <svg class="orb-svg" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="60" cy="60" r="54" stroke="rgba(0,212,255,0.08)" stroke-width="3"/>
+          <circle cx="60" cy="60" r="54" stroke="url(#g2)" stroke-width="3"
+            stroke-linecap="round" stroke-dasharray="160 180" stroke-dashoffset="30"/>
+          <defs>
+            <linearGradient id="g2" x1="120" y1="0" x2="0" y2="120" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#00D4FF"/>
+              <stop offset="100%" stop-color="#a78bfa"/>
+            </linearGradient>
+          </defs>
+          <circle cx="6" cy="60" r="4" fill="#a78bfa" opacity="0.9"/>
+          <circle cx="60" cy="114" r="3" fill="#00D4FF" opacity="0.6"/>
+        </svg>
+        <div class="orb-inner">
+          <span class="orb-percent">77%</span>
+        </div>
+      </div>
+      <div class="orb-label">
+    <h4>JavaScript</h4>
+    <p>Dasar JavaScript</p>
+      </div>
+    </div>
+
+    <!-- Laravel -->
+    <div class="skill-orb">
+      <div class="orb-ring-wrap">
+        <svg class="orb-svg" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="60" cy="60" r="54" stroke="rgba(0,212,255,0.08)" stroke-width="3"/>
+          <circle cx="60" cy="60" r="54" stroke="url(#g3)" stroke-width="3"
+            stroke-linecap="round" stroke-dasharray="140 200" stroke-dashoffset="20"/>
+          <defs>
+            <linearGradient id="g3" x1="0" y1="120" x2="120" y2="0" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#00D4FF"/>
+              <stop offset="100%" stop-color="#a78bfa"/>
+            </linearGradient>
+          </defs>
+          <circle cx="110" cy="30" r="4" fill="#00D4FF" opacity="0.8"/>
+          <circle cx="30" cy="110" r="3" fill="#a78bfa" opacity="0.5"/>
+        </svg>
+        <div class="orb-inner">
+          <span class="orb-percent">90%</span>
+        </div>
+      </div>
+      <div class="orb-label">
+        <h4>Laravel</h4>
+        <p>Blade, Routing, CRUD, dan integrasi database.</p>
+      </div>
+    </div>
+
+    <!-- UI / UX -->
+    <div class="skill-orb">
+      <div class="orb-ring-wrap">
+        <svg class="orb-svg" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="60" cy="60" r="54" stroke="rgba(0,212,255,0.08)" stroke-width="3"/>
+          <circle cx="60" cy="60" r="54" stroke="url(#g4)" stroke-width="3"
+            stroke-linecap="round" stroke-dasharray="130 210" stroke-dashoffset="50"/>
+          <defs>
+            <linearGradient id="g4" x1="60" y1="0" x2="60" y2="120" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#a78bfa"/>
+              <stop offset="100%" stop-color="#00D4FF"/>
+            </linearGradient>
+          </defs>
+          <circle cx="60" cy="114" r="4" fill="#00D4FF" opacity="0.9"/>
+          <circle cx="10" cy="40" r="3" fill="#a78bfa" opacity="0.6"/>
+        </svg>
+        <div class="orb-inner">
+          <span class="orb-percent">76%</span>
+        </div>
+      </div>
+      <div class="orb-label">
+        <h4>UI / UX</h4>
+        <p>Figma, wireframing, prototyping</p>
+      </div>
+    </div>
+
+    <!-- API -->
+    <div class="skill-orb">
+      <div class="orb-ring-wrap">
+        <svg class="orb-svg" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="60" cy="60" r="54" stroke="rgba(0,212,255,0.08)" stroke-width="3"/>
+          <circle cx="60" cy="60" r="54" stroke="url(#g5)" stroke-width="3"
+            stroke-linecap="round" stroke-dasharray="150 190" stroke-dashoffset="10"/>
+          <defs>
+            <linearGradient id="g5" x1="0" y1="60" x2="120" y2="60" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#00D4FF"/>
+              <stop offset="100%" stop-color="#a78bfa"/>
+            </linearGradient>
+          </defs>
+          <circle cx="114" cy="60" r="4" fill="#a78bfa" opacity="0.9"/>
+          <circle cx="6" cy="60" r="3" fill="#00D4FF" opacity="0.6"/>
+        </svg>
+        <div class="orb-inner">
+          <span class="orb-percent">75%</span>
+        </div>
+      </div>
+      <div class="orb-label">
+        <h4>API</h4>
+        <p>REST API.</p>
+      </div>
+    </div>
+
+  <!-- Flutter -->
+<div class="skill-orb">
+  <div class="orb-ring-wrap">
+    <svg class="orb-svg" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="60" cy="60" r="54" stroke="rgba(0,212,255,0.08)" stroke-width="3"/>
+      <circle cx="60" cy="60" r="54" stroke="url(#g6)" stroke-width="3"
+        stroke-linecap="round" stroke-dasharray="100 240" stroke-dashoffset="60"/>
+      <defs>
+        <linearGradient id="g6" x1="120" y1="120" x2="0" y2="0" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#00D4FF"/>
+          <stop offset="100%" stop-color="#a78bfa"/>
+        </linearGradient>
+      </defs>
+      <circle cx="90" cy="108" r="4" fill="#00D4FF" opacity="0.8"/>
+      <circle cx="30" cy="12" r="3" fill="#a78bfa" opacity="0.5"/>
+    </svg>
+
+    <div class="orb-inner">
+      <span class="orb-percent">79%</span>
+    </div>
+  </div>
+
+  <div class="orb-label">
+    <h4>Flutter</h4>
+    <p>Dart, Flutter, dan Firebase.</p>
+  </div>
+</div>
+
+    <!-- Tools -->
+    <div class="skill-orb">
+      <div class="orb-ring-wrap">
+        <svg class="orb-svg" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="60" cy="60" r="54" stroke="rgba(0,212,255,0.08)" stroke-width="3"/>
+          <circle cx="60" cy="60" r="54" stroke="url(#g7)" stroke-width="3"
+            stroke-linecap="round" stroke-dasharray="165 175" stroke-dashoffset="15"/>
+          <defs>
+            <linearGradient id="g7" x1="0" y1="0" x2="120" y2="120" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#a78bfa"/>
+              <stop offset="100%" stop-color="#00D4FF"/>
+            </linearGradient>
+          </defs>
+          <circle cx="6" cy="80" r="4" fill="#a78bfa" opacity="0.9"/>
+          <circle cx="114" cy="40" r="3" fill="#00D4FF" opacity="0.6"/>
+        </svg>
+        <div class="orb-inner">
+          <span class="orb-percent">85%</span>
+        </div>
+      </div>
+      <div class="orb-label">
+        <h4>Tools</h4>
+        <p>Git, GitHub, VSCode, Postman, npm</p>
+      </div>
+    </div>
+
+    <!-- IoT -->
+    <div class="skill-orb">
+      <div class="orb-ring-wrap">
+        <svg class="orb-svg" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="60" cy="60" r="54" stroke="rgba(0,212,255,0.08)" stroke-width="3"/>
+          <circle cx="60" cy="60" r="54" stroke="url(#g8)" stroke-width="3"
+            stroke-linecap="round" stroke-dasharray="138 202" stroke-dashoffset="40"/>
+          <defs>
+            <linearGradient id="g8" x1="120" y1="60" x2="0" y2="60" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#a78bfa"/>
+              <stop offset="100%" stop-color="#00D4FF"/>
+            </linearGradient>
+          </defs>
+          <circle cx="60" cy="6" r="4" fill="#a78bfa" opacity="0.9"/>
+          <circle cx="60" cy="114" r="3" fill="#00D4FF" opacity="0.6"/>
+        </svg>
+        <div class="orb-inner">
+          <span class="orb-percent">80%</span>
+        </div>
+      </div>
+      <div class="orb-label">
+        <h4>IoT</h4>
+<p>Arduino IDE, ESP32, sensor, dan servo.</p>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div style="text-align:center; margin-bottom: 3rem;" class="reveal">
+    <div class="section-label">Portfolio</div>
+    <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1rem;">Project</h2>
+    <p style="color: var(--muted); font-size: 1rem;">Berikut beberapa project yang pernah dikembangkan</p>
+  </div>
+  <div class="projects-grid">
+
+    <div class="project-card reveal">
+      <div class="proj-img proj-img-1">
+        <img src="foto/image.png" alt="Screenshot Website Profil Program Studi Vokasi UB" class="proj-screenshot"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="proj-screen" style="display:none;">
+          <div class="proj-screen-bar"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div>
+          <div class="proj-screen-body"><div class="line"></div><div class="line med"></div><div class="line short"></div><div class="line"></div><div class="line med"></div></div>
+        </div>
+      </div>
+      <div class="proj-body">
+        <div class="proj-meta"><span class="proj-tag tag-web">Web</span><span class="proj-semester">Semester 4</span></div>
+        <h3>Website Profil Profesional</h3>
+        <p>Website portofolio yang dikembangkan untuk menampilkan profil, keahlian, serta proyek yang pernah dikerjakan sebagai media personal branding di bidang pengembangan web.</p>
+        <div class="proj-stack"><span class="stack-pill">HTML</span><span class="stack-pill">CSS</span></div>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="proj-img proj-img-1">
+        <img src="foto/projent1.png" alt="Screenshot Sistem Monitoring Palang Pintu" class="proj-screenshot"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="proj-screen" style="display:none;">
+          <div class="proj-screen-bar"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div>
+          <div class="proj-screen-body"><div class="line"></div><div class="line med"></div><div class="line short"></div><div class="line"></div><div class="line med"></div></div>
+        </div>
+      </div>
+      <div class="proj-body">
+        <div class="proj-meta"><span class="proj-tag tag-web">Web</span><span class="proj-semester">Semester 4</span></div>
+        <h3>Sistem Monitoring dan Kontrol Palang Pintu Kereta Berbasis IoT</h3>
+        <p>Website monitoring dan kontrol palang pintu kereta berbasis IoT yang menampilkan status perlintasan secara real-time dan mendukung pengendalian otomatis maupun manual.</p>
+        <div class="proj-stack"><span class="stack-pill">PHP</span><span class="stack-pill">Laravel</span><span class="stack-pill">JavaScript</span><span class="stack-pill">CSS3</span></div>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="proj-img proj-img-2">
+        <img src="foto/projent2.png" alt="Screenshot LS Phone" class="proj-screenshot"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="proj-screen" style="display:none;">
+          <div class="proj-screen-bar"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div>
+          <div class="proj-screen-body"><div class="line"></div><div class="line med"></div><div class="line short"></div><div class="line"></div><div class="line med"></div></div>
+        </div>
+      </div>
+      <div class="proj-body">
+        <div class="proj-meta"><span class="proj-tag tag-web">Web</span><span class="proj-semester">Semester 3</span></div>
+        <h3>LS Phone Website Penjualan Smartphone</h3>
+        <p>Mengembangkan website katalog smartphone berbasis Laravel dengan fitur manajemen produk, pencarian produk, pengelolaan testimoni, slider promosi, dan dashboard admin.</p>
+        <div class="proj-stack"><span class="stack-pill">HTML</span><span class="stack-pill">CSS</span><span class="stack-pill">Laravel</span><span class="stack-pill">MySQL</span></div>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="proj-img proj-img-3">
+        <img src="foto/projent3.jpeg" alt="Screenshot SIAKAD" class="proj-screenshot"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="proj-screen" style="display:none;">
+          <div class="proj-screen-bar"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div>
+          <div class="proj-screen-body"><div class="line"></div><div class="line med"></div><div class="line short"></div><div class="line"></div><div class="line med"></div></div>
+        </div>
+      </div>
+      <div class="proj-body">
+        <div class="proj-meta"><span class="proj-tag tag-web">Web</span><span class="proj-semester">Semester 3</span></div>
+        <h3>Sistem Informasi Akademik (SIAKAD)</h3>
+        <p>SIAKAD berbasis mobile menggunakan Flutter dengan fitur pengelolaan nilai, jadwal pelajaran, pengumuman, serta hak akses siswa, guru, dan admin.</p>
+        <div class="proj-stack"><span class="stack-pill">Dart</span><span class="stack-pill">Firebase</span><span class="stack-pill">Flutter</span></div>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="proj-img proj-img-4">
+        <img src="foto/projent4.png" alt="Screenshot Website Portofolio Pribadi" class="proj-screenshot"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="proj-screen" style="display:none;">
+          <div class="proj-screen-bar"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div>
+          <div class="proj-screen-body"><div class="line"></div><div class="line med"></div><div class="line short"></div><div class="line"></div><div class="line med"></div></div>
+        </div>
+      </div>
+      <div class="proj-body">
+        <div class="proj-meta"><span class="proj-tag tag-web">Web</span><span class="proj-semester">Semester 2</span></div>
+        <h3>Website Portofolio Pribadi</h3>
+        <p>Website portofolio pribadi yang menyajikan informasi profil, riwayat pendidikan, pengalaman kerja, serta kompetensi yang dimiliki sebagai media personal branding di bidang teknologi informasi.</p>
+        <div class="proj-stack"><span class="stack-pill">Node.js</span><span class="stack-pill">Express</span><span class="stack-pill">MySQL</span><span class="stack-pill">JWT</span></div>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="proj-img proj-img-5">
+        <img src="foto/projent5.png" alt="Screenshot Landing Page Portofolio" class="proj-screenshot"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="proj-screen" style="display:none;">
+          <div class="proj-screen-bar"><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div></div>
+          <div class="proj-screen-body"><div class="line"></div><div class="line med"></div><div class="line short"></div><div class="line"></div><div class="line med"></div></div>
+        </div>
+      </div>
+      <div class="proj-body">
+        <div class="proj-meta"><span class="proj-tag tag-web">Web</span><span class="proj-semester">Semester 2 · 2025</span></div>
+        <h3>Website Open Trip Bromo</h3>
+        <p>Website Open Trip Bromo yang menyediakan informasi paket wisata dan fitur pemesanan secara online.</p>
+        <div class="proj-stack"><span class="stack-pill">HTML</span><span class="stack-pill">CSS</span><span class="stack-pill">Bootstrap</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="contact" class="contact-section">
+  <div class="contact-inner reveal">
+    <div class="section-label">Kontak</div>
+    <h2>Mari Terhubung</h2>
+    <div class="contact-links">
+    <a href="mailto:dickyadinugroho@student.ub.ac.id" class="contact-link">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <rect x="2" y="4" width="20" height="16" rx="2"/>
+    <path d="m2 7 10 7 10-7"/>
+  </svg>
+  Email
+</a>
+      <a href="https://github.com/dickyadinugroho25" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/>
+        </svg>
+        GitHub
+      </a>
+      <a href="https://linkedin.com/in/dicky-adi-nugroho" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+        </svg>
+        LinkedIn
+      </a>
+      <a href="https://wa.me/6285710632525" class="contact-link" target="_blank">
+  <svg viewBox="0 0 24 24" fill="currentColor">
+    <path d="M20.52 3.48A11.88 11.88 0 0 0 12.03 0C5.4 0 0 5.4 0 12.03c0 2.12.55 4.2 1.6 6.03L0 24l6.12-1.58a11.95 11.95 0 0 0 5.91 1.51H12c6.63 0 12.03-5.4 12.03-12.03 0-3.21-1.25-6.23-3.51-8.42ZM12 21.87a9.85 9.85 0 0 1-5.02-1.37l-.36-.21-3.63.94.97-3.54-.24-.37A9.83 9.83 0 1 1 12 21.87Zm5.4-7.35c-.3-.15-1.77-.87-2.04-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.74-1.64-2.04-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.48-.5-.67-.5h-.57c-.2 0-.52.08-.8.37-.27.3-1.05 1.03-1.05 2.5s1.08 2.9 1.23 3.1c.15.2 2.12 3.24 5.13 4.54.72.31 1.28.5 1.72.64.72.23 1.38.2 1.9.12.58-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.08-.12-.27-.2-.57-.35Z"/>
+  </svg>
+  WhatsApp
+</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>&copy;2026 Dicky Adi Nugroho</p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  const orbObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); orbObs.unobserve(e.target); }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.skill-orb').forEach(c => orbObs.observe(c));
+
+  const bar = document.getElementById('scroll-progress');
+  window.addEventListener('scroll', () => {
+    const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+    bar.style.width = pct + '%';
+  });
+
+  const heroSection = document.querySelector('.hero');
+  const heroWrap    = document.querySelector('.hero-photo-wrap');
+  if (heroSection && heroWrap) {
+    heroSection.addEventListener('mousemove', e => {
+      const r  = heroSection.getBoundingClientRect();
+      const dx = (e.clientX - r.left - r.width  / 2) / r.width  * 18;
+      const dy = (e.clientY - r.top  - r.height / 2) / r.height * 12;
+      heroWrap.style.transform = `translate(${dx}px, ${dy}px)`;
+    });
+    heroSection.addEventListener('mouseleave', () => { heroWrap.style.transform = ''; });
+  }
+
+  document.querySelectorAll('.btn').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const r  = btn.getBoundingClientRect();
+      const dx = (e.clientX - r.left - r.width  / 2) * 0.3;
+      const dy = (e.clientY - r.top  - r.height / 2) * 0.3;
+      btn.style.transform = `translate(${dx}px, ${dy}px)`;
+    });
+    btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+  });
+</script>
+
+</body>
+</html>
